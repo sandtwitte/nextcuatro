@@ -290,6 +290,33 @@ td,th{border-bottom:1px solid #e5ebf1}
   .footer{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
 }
 
+
+/* v3.1 responsive + fixed-team refinements */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+img,svg{max-width:100%}
+.app,.grid,main,aside,.card,.panel,.hero{min-width:0;max-width:100%}
+.team-manager{margin-top:8px;padding-top:4px}
+.team-maker{display:grid;grid-template-columns:1fr 1fr auto;gap:7px;align-items:end}
+.fixed-team-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.fixed-team-chip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid #dce5ed;border-radius:11px;background:#f7fafc;font-size:13px}
+.fixed-team-chip strong{color:var(--nc-ink)}
+.fixed-team-chip button{min-height:34px;padding:5px 9px;font-size:12px}
+.history-scroll{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.history-scroll table{width:max-content;min-width:100%}
+@media(max-width:640px){
+  .team-maker{grid-template-columns:1fr 1fr}
+  .team-maker button{grid-column:1/-1;width:100%}
+  .toolbar{display:grid;grid-template-columns:1fr}
+  .toolbar button{width:100%}
+  .timerbar{width:100%;max-width:100%}
+  .timerbar select{width:100%;min-width:0}
+  .modebox{width:100%}
+  .court,.player-row,.waiting,.nextbar{max-width:100%}
+  .team,.result-buttons button,.player-name{overflow-wrap:anywhere;word-break:normal}
+  .history{overflow:hidden}
+  .history-scroll{margin:0;max-width:100%}
+}
+
 </style>
 <!-- NextCuatro v3: redesigned mobile-first visual interface -->
 </head>
@@ -305,7 +332,7 @@ td,th{border-bottom:1px solid #e5ebf1}
     </div>
     <div class="toolbar">
       <button class="secondary" id="resetBtn">New Session</button>
-      <button class="secondary" id="exportBtn">Export Session</button>
+      
     </div>
   </div>
 
@@ -346,6 +373,19 @@ td,th{border-bottom:1px solid #e5ebf1}
         <button class="primary" id="addPlayerBtn">Add</button>
       </div>
       <div id="duplicateNotice" class="notice" style="display:none"></div>
+
+      <div class="team-manager">
+        <div class="section-title" style="margin-top:14px;margin-bottom:8px">
+          <h2 style="font-size:15px">Fixed teams <span class="tiny">(optional)</span></h2>
+        </div>
+        <div class="team-maker">
+          <select id="teamPlayerA" aria-label="First team player"></select>
+          <select id="teamPlayerB" aria-label="Second team player"></select>
+          <button class="secondary" id="makeTeamBtn">Pair</button>
+        </div>
+        <div id="fixedTeamList" class="fixed-team-list"></div>
+        <div class="tiny" style="margin-top:6px">Paired players stay together whenever they are assigned to play. Everyone else remains solo.</div>
+      </div>
 
       <div class="player-list" id="playerList" style="margin-top:12px"></div>
 
@@ -409,10 +449,10 @@ td,th{border-bottom:1px solid #e5ebf1}
           <h2>Session fairness</h2>
           <span class="subtle">Rounds, sit-outs, partners</span>
         </div>
-        <div style="overflow:auto">
+        <div class="history-scroll">
           <table>
             <thead>
-              <tr><th>Player</th><th>Played</th><th>Sat</th><th>Record</th><th>Different partners</th><th>Status</th></tr>
+              <tr><th>Player</th><th>Played</th><th>Sat Out</th><th>Record</th><th>Different partners</th><th>Status</th></tr>
             </thead>
             <tbody id="statsBody"></tbody>
           </table>
@@ -421,11 +461,11 @@ td,th{border-bottom:1px solid #e5ebf1}
     </main>
   </div>
 </div>
-<div class="footer">NextCuatro · © 2026 Todd Witte</div>
+<div class="footer">NextCuatro · v3.1 · © 2026 Todd Witte</div>
 
 <script>
 (() => {
-  const STORAGE_KEY = 'nextcuatro_v2_state';
+  const STORAGE_KEY = 'nextcuatro_v31_state';
   const defaultState = {
     round: 0,
     courts: 4,
@@ -434,7 +474,8 @@ td,th{border-bottom:1px solid #e5ebf1}
     mode: 'smart',
     timerMinutes: 12,
     players: [],
-    currentRound: null
+    currentRound: null,
+    fixedTeams: []
   };
   let state = load();
 
@@ -449,9 +490,35 @@ td,th{border-bottom:1px solid #e5ebf1}
   }
   function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
   state.players=(state.players||[]).map(p=>({wins:0,losses:0,partners:{},opponents:{},played:0,sat:0,lastSatRound:-999,joinedRound:0,status:'active',...p}));
+  state.fixedTeams = Array.isArray(state.fixedTeams) ? state.fixedTeams.filter(t=>state.players.some(p=>p.id===t.a)&&state.players.some(p=>p.id===t.b)) : [];
 
   function activePlayers(){ return state.players.filter(p => p.status === 'active' || p.status === 'leaving'); }
   function normalizedName(s){ return s.trim().replace(/\s+/g,' ').toLowerCase(); }
+
+  function teamForPlayer(id){ return state.fixedTeams.find(t=>t.a===id || t.b===id) || null; }
+  function areFixedPartners(a,b){
+    const t=teamForPlayer(a.id);
+    return !!t && (t.a===b.id || t.b===b.id);
+  }
+  function createFixedTeam(){
+    const a=$('teamPlayerA').value, b=$('teamPlayerB').value;
+    if(!a || !b || a===b) return;
+    if(teamForPlayer(a) || teamForPlayer(b)){ alert('One of those players is already on a fixed team. Unpair them first.'); return; }
+    state.fixedTeams.push({id:uid(),a,b}); save(); render();
+  }
+  function removeFixedTeam(id){ state.fixedTeams=state.fixedTeams.filter(t=>t.id!==id); save(); render(); }
+  function renderFixedTeams(){
+    const candidates=state.players.filter(p=>p.status!=='left' && !teamForPlayer(p.id));
+    const options='<option value="">Choose player…</option>'+candidates.map(p=>`<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('');
+    $('teamPlayerA').innerHTML=options; $('teamPlayerB').innerHTML=options;
+    const box=$('fixedTeamList'); box.innerHTML='';
+    for(const t of state.fixedTeams){
+      const a=state.players.find(p=>p.id===t.a), b=state.players.find(p=>p.id===t.b); if(!a||!b) continue;
+      const row=document.createElement('div'); row.className='fixed-team-chip';
+      row.innerHTML=`<strong>🤝 ${escapeHtml(a.name)} + ${escapeHtml(b.name)}</strong><button class="secondary">Unpair</button>`;
+      row.querySelector('button').onclick=()=>removeFixedTeam(t.id); box.appendChild(row);
+    }
+  }
 
   function addPlayer(){
     const raw = $('playerName').value.trim().replace(/\s+/g,' ');
@@ -478,6 +545,7 @@ td,th{border-bottom:1px solid #e5ebf1}
     const p = state.players.find(x=>x.id===id);
     if(!p) return;
     p.status = status;
+    if(status==='left'){ const t=teamForPlayer(id); if(t) state.fixedTeams=state.fixedTeams.filter(x=>x.id!==t.id); }
     save(); render();
   }
 
@@ -491,24 +559,48 @@ td,th{border-bottom:1px solid #e5ebf1}
   function partnerCount(a,b){ return a.partners[b.id] || 0; }
   function opponentCount(a,b){ return a.opponents[b.id] || 0; }
 
+  function playPriority(p){
+    const recentSit = state.round - p.lastSatRound <= 1 ? 1000 : 0;
+    const newBoost = state.round - p.joinedRound <= 1 ? 500 : 0;
+    return p.sat*120 + recentSit + newBoost - p.played*10 + Math.random()*8;
+  }
+
+  function makeUnits(players){
+    const ids=new Set(players.map(p=>p.id));
+    const used=new Set(), units=[];
+    for(const p of players){
+      if(used.has(p.id)) continue;
+      const t=teamForPlayer(p.id);
+      if(t && ids.has(t.a) && ids.has(t.b)){
+        const a=state.players.find(x=>x.id===t.a), b=state.players.find(x=>x.id===t.b);
+        units.push({players:[a,b],size:2,score:playPriority(a)+playPriority(b)}); used.add(a.id); used.add(b.id);
+      } else { units.push({players:[p],size:1,score:playPriority(p)}); used.add(p.id); }
+    }
+    return units;
+  }
+
   function chooseParticipants(players, capacity){
     if(players.length <= capacity) return {playing:[...players], waiting:[]};
-
-    // Fair sit-out score: fewer sits + not recently sat + players who just joined favored to play.
-    // Lower score => more eligible to sit this round.
-    const sorted = [...players].sort((a,b)=>{
-      const aRecent = state.round - a.lastSatRound <= 1 ? 1000 : 0;
-      const bRecent = state.round - b.lastSatRound <= 1 ? 1000 : 0;
-      const aNew = state.round - a.joinedRound <= 1 ? 500 : 0;
-      const bNew = state.round - b.joinedRound <= 1 ? 500 : 0;
-      const aScore = a.sat*120 + aRecent + aNew - a.played*10 + Math.random()*8;
-      const bScore = b.sat*120 + bRecent + bNew - b.played*10 + Math.random()*8;
-      return aScore-bScore;
+    const units=makeUnits(players);
+    // DP: choose units totaling capacity, maximizing priority-to-play.
+    let dp=Array(capacity+1).fill(null); dp[0]={score:0,idx:[]};
+    units.forEach((u,i)=>{
+      for(let c=capacity;c>=u.size;c--){
+        if(!dp[c-u.size]) continue;
+        const cand={score:dp[c-u.size].score+u.score,idx:[...dp[c-u.size].idx,i]};
+        if(!dp[c] || cand.score>dp[c].score) dp[c]=cand;
+      }
     });
-    const waitCount = players.length-capacity;
-    const waiting = sorted.slice(0,waitCount);
-    const waitingIds = new Set(waiting.map(p=>p.id));
-    return {playing:players.filter(p=>!waitingIds.has(p.id)), waiting};
+    const chosen=dp[capacity];
+    if(!chosen){
+      // Rare parity fallback: avoid splitting teams by reducing one court if needed.
+      for(let c=capacity-1;c>=4;c--){ if(c%4===0 && dp[c]) return chooseParticipants(players,c); }
+      return {playing:players.slice(0,capacity),waiting:players.slice(capacity)};
+    }
+    const chosenSet=new Set(chosen.idx);
+    const playing=[],waiting=[];
+    units.forEach((u,i)=>(chosenSet.has(i)?playing:waiting).push(...u.players));
+    return {playing,waiting};
   }
 
   function shuffle(arr){
@@ -541,8 +633,32 @@ td,th{border-bottom:1px solid #e5ebf1}
     return cost;
   }
 
+  function groupRepeatCost(group){
+    let c=0;
+    for(let i=0;i<group.length;i++){
+      for(let j=i+1;j<group.length;j++){
+        c += partnerCount(group[i],group[j])*4 + opponentCount(group[i],group[j]);
+      }
+    }
+    return c;
+  }
+
+  function validTeamPairings(group){
+    const opts=teamPairings(group);
+    return opts.filter(opt=>{
+      const pairs=[[opt[0][0],opt[0][1]],[opt[1][0],opt[1][1]]];
+      for(const p of group){
+        const t=teamForPlayer(p.id);
+        if(!t) continue;
+        const mate=group.find(x=>x.id===(t.a===p.id?t.b:t.a));
+        if(mate && !pairs.some(([x,y])=>(x.id===p.id&&y.id===mate.id)||(y.id===p.id&&x.id===mate.id))) return false;
+      }
+      return true;
+    });
+  }
   function bestTeams(group, mode){
-    const options=teamPairings(group);
+    const options=validTeamPairings(group);
+    if(!options.length) return teamPairings(group)[0];
     let best=options[0], bestCost=Infinity;
     for(const opt of options){
       let cost=repeatCost(opt, mode==='mix'?1.5:.35);
@@ -554,69 +670,45 @@ td,th{border-bottom:1px solid #e5ebf1}
     return best;
   }
 
-  function groupRepeatCost(group){
-    let c=0;
-    for(let i=0;i<group.length;i++){
-      for(let j=i+1;j<group.length;j++){
-        c += partnerCount(group[i],group[j])*4 + opponentCount(group[i],group[j]);
-      }
+  function packUnits(units){
+    const groups=[];
+    for(const u of units){
+      let choices=groups.map((g,i)=>({g,i,space:4-g.length})).filter(x=>x.space>=u.size);
+      if(!choices.length) groups.push([...u.players]);
+      else { choices.sort((a,b)=>a.space-b.space); groups[choices[0].i].push(...u.players); }
     }
-    return c;
+    return groups.length && groups.every(g=>g.length===4) ? groups : null;
   }
 
-  function buildSmart(players, mode){
-    // Randomized greedy grouping with multiple trials, minimizing repeat combinations.
+  function courtSkillSpread(g){
+    const vals=g.map(p=>p.skill??3); return Math.max(...vals)-Math.min(...vals);
+  }
+  function buildWithTeams(players,mode){
+    const units=makeUnits(players);
     let best=null,bestCost=Infinity;
-    const trials=Math.min(250, 40 + players.length*8);
+    const trials=Math.min(500,100+players.length*14);
     for(let t=0;t<trials;t++){
-      const arr=shuffle(players);
-      const groups=[];
+      let ordered;
+      if(mode==='similar' && t<Math.floor(trials*.35)) ordered=[...units].sort((a,b)=>((b.players.reduce((s,p)=>s+(p.skill??3),0)/b.size)-(a.players.reduce((s,p)=>s+(p.skill??3),0)/a.size)));
+      else ordered=shuffle(units);
+      const groups=packUnits(ordered); if(!groups) continue;
       let cost=0;
-      for(let i=0;i<arr.length;i+=4){
-        const g=arr.slice(i,i+4);
-        groups.push(g);
-        cost += groupRepeatCost(g);
-        if(mode==='mix') cost += groupRepeatCost(g)*2;
+      for(const g of groups){
+        cost += groupRepeatCost(g)*(mode==='mix'?3:1);
+        const pair=bestTeams(g,mode);
+        if(mode==='balanced') cost += teamBalanceCost(pair)*8;
+        if(mode==='similar') cost += courtSkillSpread(g)*8 + teamBalanceCost(pair)*3;
+        if(mode==='smart') cost += teamBalanceCost(pair)*.5;
+        if(mode==='mix') cost += teamBalanceCost(pair)*.35;
       }
       if(cost<bestCost){best=groups;bestCost=cost;}
     }
+    if(!best){
+      const groups=packUnits(units);
+      if(!groups) throw new Error('Could not create valid courts without splitting a fixed team.');
+      best=groups;
+    }
     return best.map(g=>bestTeams(g,mode));
-  }
-
-  function buildSimilar(players){
-    const rated=[...players].sort((a,b)=>(b.skill??3)-(a.skill??3));
-    const groups=[];
-    for(let i=0;i<rated.length;i+=4) groups.push(rated.slice(i,i+4));
-    return groups.map(g=>bestTeams(g,'similar'));
-  }
-
-  function buildBalanced(players){
-    // Snake-seed across courts by skill to spread stronger/weaker players,
-    // then balance teams within each court.
-    const nCourts = players.length/4;
-    const sorted=[...players].sort((a,b)=>(b.skill??3)-(a.skill??3));
-    const groups=Array.from({length:nCourts},()=>[]);
-    let idx=0,dir=1;
-    for(const p of sorted){
-      groups[idx].push(p);
-      if(dir===1 && idx===nCourts-1){dir=-1;}
-      else if(dir===-1 && idx===0){dir=1;}
-      else idx+=dir;
-    }
-    // Improve court composition by randomized swaps while preserving skill spread.
-    let best=groups, bestCost=Infinity;
-    const evalGroups = gs => gs.reduce((sum,g)=>sum+groupRepeatCost(g)+Math.min(...teamPairings(g).map(teamBalanceCost))*5,0);
-    bestCost=evalGroups(best);
-    for(let t=0;t<120;t++){
-      const cand=best.map(g=>[...g]);
-      const a=Math.floor(Math.random()*cand.length), b=Math.floor(Math.random()*cand.length);
-      if(a===b) continue;
-      const ia=Math.floor(Math.random()*4), ib=Math.floor(Math.random()*4);
-      [cand[a][ia],cand[b][ib]]=[cand[b][ib],cand[a][ia]];
-      const cost=evalGroups(cand);
-      if(cost<bestCost){best=cand;bestCost=cost;}
-    }
-    return best.map(g=>bestTeams(g,'balanced'));
   }
 
   function makeRound(){
@@ -638,9 +730,8 @@ td,th{border-bottom:1px solid #e5ebf1}
     const {playing,waiting}=chooseParticipants(actives,capacity);
 
     let courts;
-    if(state.mode==='similar') courts=buildSimilar(playing);
-    else if(state.mode==='balanced') courts=buildBalanced(playing);
-    else courts=buildSmart(playing,state.mode);
+    try{ courts=buildWithTeams(playing,state.mode); }
+    catch(e){ alert(e.message); return; }
 
     state.round += 1;
 
@@ -682,7 +773,7 @@ td,th{border-bottom:1px solid #e5ebf1}
       row.innerHTML=`
         <div>
           <div class="player-name">${escapeHtml(p.name)}</div>
-          <div class="tiny">${p.skill ? 'Private skill '+p.skill : 'Unrated'} · ${statusLabel(p.status)}</div>
+          <div class="tiny">${p.skill ? 'Private skill '+p.skill : 'Unrated'} · ${statusLabel(p.status)}${teamForPlayer(p.id)?' · Fixed team':''}</div>
         </div>
         <div class="status-menu">
           ${p.status!=='active'?`<button data-action="active">Active</button>`:''}
@@ -723,7 +814,7 @@ td,th{border-bottom:1px solid #e5ebf1}
     apply(prev,-1); cr.results[courtIndex]=winner; apply(winner,1);
     save();render();
   }
-  function finalizeLeavers(){state.players.forEach(p=>{if(p.status==='leaving')p.status='left'});}
+  function finalizeLeavers(){ const leaving=state.players.filter(p=>p.status==='leaving').map(p=>p.id); state.players.forEach(p=>{if(p.status==='leaving')p.status='left'}); state.fixedTeams=state.fixedTeams.filter(t=>!leaving.includes(t.a)&&!leaving.includes(t.b)); }
 
   function renderRound(){
     const area=$('courtArea'); area.innerHTML='';
@@ -798,7 +889,7 @@ td,th{border-bottom:1px solid #e5ebf1}
     $('endTime').value=state.endTime;
     $('modeSelect').value=state.mode;
     $('timerMinutes').value=String(state.timerMinutes??12);
-    renderPlayers(); renderRound(); renderStats(); renderReservation();
+    renderPlayers(); renderFixedTeams(); renderRound(); renderStats(); renderReservation();
   }
 
   function escapeHtml(s){
@@ -833,6 +924,7 @@ td,th{border-bottom:1px solid #e5ebf1}
   }
 
   $('addPlayerBtn').onclick=addPlayer;
+  $('makeTeamBtn').onclick=createFixedTeam;
   $('playerName').addEventListener('keydown',e=>{if(e.key==='Enter') addPlayer();});
   $('nextRoundBtn').onclick=()=>{makeRound();if(state.currentRound)resetTimer();};
   $('timerStartBtn').onclick=toggleTimer;
@@ -849,14 +941,6 @@ td,th{border-bottom:1px solid #e5ebf1}
     }
   };
 
-  $('exportBtn').onclick=()=>{
-    const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
-    a.download=`nextcuatro-session-${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
 
   render();
   timerRemaining=(state.timerMinutes||12)*60;renderTimer();

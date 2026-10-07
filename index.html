@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1f7a5c" />
-<title>NextCuatro v4.2</title>
+<title>NextCuatro v4.2.1</title>
 <style>
 
   :root{
@@ -347,9 +347,11 @@ input,select,button{max-width:100%}
 
 
   .team-pick{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:5px 7px;border-radius:10px;font:inherit;font-weight:750;cursor:pointer}
+  #nextRoundBtn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+  #nextRoundBtn .next-logo{width:24px;height:24px;object-fit:contain;border-radius:5px;flex:0 0 auto}
   .team-pick:hover{background:#f1f4f5}
   .team-pick.selected{background:var(--accent2);color:var(--accent);outline:2px solid var(--accent);}
-  .vs{display:block;width:100%;text-align:center!important;margin-left:0!important;margin-right:0!important}
+  .vs{display:block;width:100%;text-align:left!important;padding-left:5ch!important;box-sizing:border-box;margin-left:0!important;margin-right:0!important}
   .timer-display.timer-ended{font-size:24px;line-height:1.05;min-width:220px;text-align:center;animation:timerFlash .8s ease-in-out infinite alternate;color:#b42318}
   @keyframes timerFlash{from{opacity:1;transform:scale(1)}to{opacity:.42;transform:scale(1.04)}}
 
@@ -366,7 +368,7 @@ input,select,button{max-width:100%}
       </div>
     </div>
     <div class="toolbar">
-      <button class="secondary" id="resetBtn">New Session</button>
+      <button class="secondary" id="resetBtn">New Session / Clear Everything</button>
       
     </div>
   </div>
@@ -449,7 +451,6 @@ input,select,button{max-width:100%}
           <div class="timer-display" id="timerDisplay">12:00</div>
           <button class="secondary" id="timerStartBtn">Start</button>
           <button class="secondary" id="timerResetBtn">Reset</button>
-          <div class="tiny">At zero: finish the rally. If tied, play one deciding point.</div>
         </div>
         <div id="courtArea" class="courts"></div>
         <div id="emptyState" class="empty">
@@ -460,7 +461,7 @@ input,select,button{max-width:100%}
 
         <div class="nextbar">
           <div class="subtle" id="reservationNote" style="display:none"></div>
-          <button class="primary" id="nextRoundBtn">🔀 Create Round 1</button>
+          <button class="primary" id="nextRoundBtn"><img class="next-logo" src="nextcuatro-logo.png" alt="">Create Round 1</button>
         </div>
       </section>
 
@@ -481,7 +482,7 @@ input,select,button{max-width:100%}
     </main>
   </div>
 </div>
-<div class="footer">NextCuatro · v4.2 · © 2026 Todd Witte</div>
+<div class="footer">NextCuatro · v4.2.1 · © 2026 Todd Witte</div>
 
 <script>
 (() => {
@@ -967,7 +968,7 @@ input,select,button{max-width:100%}
       $('roundTitle').textContent='Ready to start';
       $('statsLine').textContent='Add players, choose a mode, then create the first round.';
       $('waitingBox').style.display='none';
-      $('nextRoundBtn').textContent='🔀 Create Round 1';
+      $('nextRoundBtn').innerHTML=nextButtonHtml('Create Round 1');
       return;
     }
     $('emptyState').style.display='none';
@@ -992,7 +993,7 @@ input,select,button{max-width:100%}
       $('waitingBox').style.display='block';
       $('waitingBox').innerHTML=`<strong>Sitting this round out:</strong> ${cr.waiting.map(nameById).map(escapeHtml).join(', ')}`;
     } else $('waitingBox').style.display='none';
-    $('nextRoundBtn').textContent=`🔀 Next Cuatro`;
+    $('nextRoundBtn').innerHTML=nextButtonHtml('Next Cuatro');
   }
 
   function renderStats(){
@@ -1094,7 +1095,7 @@ input,select,button{max-width:100%}
   $('endTime').onchange=()=>{state.endTime=$('endTime').value;save();renderReservation();};
 
   $('resetBtn').onclick=()=>{
-    if(confirm('Start a new NextCuatro session? This clears the current session from this browser.')){
+    if(confirm('Start a new session?\n\nThis will erase all players, pairings, results, and session data and start fresh.\n\nAre you sure you want to clear everything?')){
       state=structuredClone(defaultState); save(); render();
     }
   };

@@ -4,8 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1f7a5c" />
-<title>NextCuatro — Smart Pickleball Rotations</title>
+<title>NextCuatro v4.2</title>
 <style>
+
   :root{
     --bg:#f5f7f8; --card:#fff; --ink:#172026; --muted:#6d7a84; --line:#dfe5e8;
     --accent:#1f7a5c; --accent2:#e9f5f0; --warn:#fff3d6; --danger:#b73a3a;
@@ -65,7 +66,7 @@
   table{width:100%;border-collapse:collapse;font-size:14px}
   th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line)}
   th{color:var(--muted);font-weight:600}
-  .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--accent2);color:var(--accent);font-size:12px;font-weight:700}
+  .pill{display:inline-block;padding:7px 12px;border-radius:999px;background:var(--accent2);color:var(--accent);font-size:17px;font-weight:800}
   .notice{margin:10px 0;padding:10px 12px;border-radius:10px;background:#fff7e6;color:#7a5b15;font-size:13px}
   .footer-note{font-size:12px;color:var(--muted);margin-top:14px}
 
@@ -142,183 +143,217 @@
   }
 
 
-/* ===== NextCuatro v3 visual system ===== */
-:root{
-  --nc-navy:#062b54;
-  --nc-navy2:#0b3c70;
-  --nc-green:#69c52f;
-  --nc-green-dark:#4eaa20;
-  --nc-ink:#082e57;
-  --nc-muted:#66758b;
-  --nc-line:#dce4ed;
-  --nc-bg:#f4f7fa;
-  --nc-card:#ffffff;
-}
-body{
-  background:linear-gradient(180deg,#f8fafc 0%,var(--nc-bg) 100%);
-  color:var(--nc-ink);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-}
-.app{max-width:1180px;margin:0 auto;padding:14px}
-.topbar{
-  background:linear-gradient(135deg,var(--nc-navy),var(--nc-navy2));
-  border-radius:20px;
-  padding:16px 18px;
-  box-shadow:0 10px 28px rgba(6,43,84,.16);
-  margin-bottom:16px;
-}
-.brand{gap:14px}
-.logo,.logo-img{
-  width:66px;height:66px;border-radius:16px;
-  box-shadow:0 4px 14px rgba(0,0,0,.18);
-}
-h1{color:#fff;font-size:32px;letter-spacing:-.7px;margin:0}
-.topbar .subtle,.brand .subtle{color:#dce9f5}
-.card{
-  background:var(--nc-card);
-  border:1px solid var(--nc-line);
-  border-radius:20px;
-  box-shadow:0 5px 18px rgba(8,46,87,.055);
-}
-.panel,.hero{padding:18px}
-.panel h2,.hero h2,.round-title{color:var(--nc-ink)}
-button{
-  border-radius:12px;
-  min-height:42px;
-  font-weight:650;
-  transition:transform .08s ease,box-shadow .15s ease,background .15s ease;
-}
-button:active{transform:scale(.985)}
-button.primary,.primary{
-  background:linear-gradient(180deg,var(--nc-green),var(--nc-green-dark));
-  border-color:var(--nc-green-dark);
-  color:white;
-  box-shadow:0 4px 10px rgba(78,170,32,.20);
-}
-input,select{
-  border:1px solid #ccd7e3;
-  border-radius:11px;
-  background:#fbfcfe;
-}
-input:focus,select:focus{
-  outline:2px solid rgba(105,197,47,.22);
-  border-color:var(--nc-green);
-}
-.player-row{
-  border:1px solid #e3e9ef;
-  border-radius:14px;
-  background:#fff;
-  padding:10px;
-}
-.court{
-  border:1px solid #dce5ed;
-  border-radius:17px;
-  background:linear-gradient(180deg,#fff,#fbfdff);
-  box-shadow:0 3px 12px rgba(8,46,87,.05);
-}
-.court h3{
-  color:var(--nc-green-dark);
-  letter-spacing:.6px;
-}
-.team{color:var(--nc-ink);font-weight:750}
-.vs{color:#7b8999;font-weight:700}
-.timerbar{
-  background:#f7fafc;
-  border:1px solid #dce5ed;
-  border-radius:15px;
-}
-.timer-display{color:var(--nc-ink);font-weight:800}
-.waiting{
-  background:#f7fafc;
-  border:1px dashed #cdd9e4;
-  border-radius:14px;
-}
-.nextbar{
-  background:#fff;
-  border-top:1px solid #e2e9ef;
-  padding-top:14px;
-}
-.nextbar .primary{
-  font-size:18px;
-  min-height:52px;
-}
-.footer{
-  color:#607188;
-  font-size:13px;
-  text-align:center;
-  padding:18px 8px 24px;
-}
-table{border-collapse:separate;border-spacing:0}
-th{color:var(--nc-ink);background:#f5f8fb}
-td,th{border-bottom:1px solid #e5ebf1}
 
-/* Phone-first v3 */
+/* v4.1.1 — v3.1 layout preserved; only branding/compact-control additions */
+:root{
+  --accent:#8fce32;
+  --accent2:#eef8df;
+}
+body{background:#f5f7f8}
+.topbar{
+  background:#123b5d;
+  margin:-18px -18px 18px;
+  padding:15px 18px;
+  border-bottom:4px solid #8fce32;
+  color:white;
+  border-radius:0 0 16px 16px;
+}
+.topbar h1{color:white}
+.topbar .subtle,.topbar .tiny{color:#dce9f1}
+.topbar .logo{
+  width:82px;height:82px;
+  border-radius:14px;
+  box-shadow:none;
+  background:#123b5d;
+}
+.topbar .toolbar .secondary{
+  background:white;
+  border-color:white;
+  color:#123b5d;
+}
+.modebox{
+  min-width:0;
+  display:flex;
+  align-items:end;
+  gap:8px;
+}
+.modebox label{white-space:nowrap;margin-bottom:11px}
+.modebox select{width:auto;min-width:170px}
+.status-menu select{
+  width:auto;
+  min-width:110px;
+  padding:6px 8px;
+  font-size:12px;
+  min-height:32px;
+}
+.status-menu button.selected{
+  background:var(--accent);
+  color:#17321a;
+  font-weight:700;
+}
+button.primary{color:#17321a}
+.court{border-top:3px solid var(--accent)}
+@media(max-width:840px){
+  .topbar{margin:-10px -10px 10px;padding:13px 12px}
+}
 @media(max-width:640px){
-  .app{padding:0 0 12px}
+  .app{width:100%;max-width:100%;overflow-x:hidden}
   .topbar{
-    border-radius:0 0 20px 20px;
-    padding:13px 14px 15px;
-    margin-bottom:12px;
+    margin:-8px -8px 10px;
+    padding:12px 10px;
+    border-radius:0 0 14px 14px;
   }
-  .brand{gap:11px}
-  .logo,.logo-img{width:58px;height:58px;border-radius:14px}
-  h1{font-size:27px;line-height:1.05}
-  .topbar .subtle,.brand .subtle{font-size:12px;margin-top:4px}
-  .grid{padding:0 10px;gap:10px}
-  .card{border-radius:17px}
-  .panel,.hero{padding:13px}
-  .panel h2{font-size:20px}
-  input,select{min-height:46px;font-size:16px}
-  button{min-height:44px}
-  .player-add{grid-template-columns:1fr 105px}
-  .player-add button{grid-column:1/-1}
-  .player-row{padding:11px}
-  .round-title{font-size:25px}
-  .court{padding:14px}
-  .team{font-size:20px}
-  .result-buttons button{min-height:47px}
+  .topbar .brand{width:100%;align-items:center}
+  .topbar .logo{width:72px;height:72px;flex:0 0 72px}
+  .topbar h1{font-size:23px}
+  .topbar .subtle{font-size:13px}
+  .modebox{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr);
+    align-items:center;
+    width:100%;
+    margin-top:10px;
+  }
+  .modebox label{margin:0}
+  .modebox select{width:100%;min-width:0}
+  .status-menu{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:100%;
+    gap:6px;
+  }
+  .status-menu button,.status-menu select{
+    width:100%;
+    min-width:0;
+    min-height:42px;
+    font-size:13px;
+  }
+  .player-row{overflow:hidden}
+  .court,.card,.panel,.hero{max-width:100%}
   .nextbar{
     position:sticky;
     bottom:0;
-    z-index:10;
-    margin:10px -13px -13px;
-    padding:10px 13px calc(10px + env(safe-area-inset-bottom));
-    box-shadow:0 -6px 18px rgba(8,46,87,.08);
-    border-radius:0 0 17px 17px;
+    z-index:8;
+    background:white;
+    padding:8px 0 max(6px,env(safe-area-inset-bottom));
   }
-  .nextbar .primary{width:100%;min-height:56px;font-size:19px}
-  .footer{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+}
+@media(max-width:380px){
+  .topbar .logo{width:64px;height:64px;flex-basis:64px}
+  .status-menu{grid-template-columns:1fr}
 }
 
 
-/* v3.1 responsive + fixed-team refinements */
+/* v4.1.2 iPhone width fix */
 html,body{width:100%;max-width:100%;overflow-x:hidden}
-img,svg{max-width:100%}
-.app,.grid,main,aside,.card,.panel,.hero{min-width:0;max-width:100%}
-.team-manager{margin-top:8px;padding-top:4px}
-.team-maker{display:grid;grid-template-columns:1fr 1fr auto;gap:7px;align-items:end}
-.fixed-team-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-.fixed-team-chip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid #dce5ed;border-radius:11px;background:#f7fafc;font-size:13px}
-.fixed-team-chip strong{color:var(--nc-ink)}
-.fixed-team-chip button{min-height:34px;padding:5px 9px;font-size:12px}
-.history-scroll{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.history-scroll table{width:max-content;min-width:100%}
-@media(max-width:640px){
-  .team-maker{grid-template-columns:1fr 1fr}
-  .team-maker button{grid-column:1/-1;width:100%}
-  .toolbar{display:grid;grid-template-columns:1fr}
-  .toolbar button{width:100%}
-  .timerbar{width:100%;max-width:100%}
-  .timerbar select{width:100%;min-width:0}
-  .modebox{width:100%}
-  .court,.player-row,.waiting,.nextbar{max-width:100%}
-  .team,.result-buttons button,.player-name{overflow-wrap:anywhere;word-break:normal}
-  .history{overflow:hidden}
-  .history-scroll{margin:0;max-width:100%}
+img,svg{max-width:100%;height:auto}
+.app,.grid,.card,.panel,.hero,.topbar,.brand,.toolbar,.setup-row,
+.player-add,.player-list,.player-row,.section-title,.hero-head,.modebox,
+.timerbar,.courts,.court,.waiting,.nextbar,.history,.footer{
+  min-width:0;
+  max-width:100%;
 }
+.card,.panel,.hero,.court,.player-row{overflow-wrap:anywhere}
+input,select,button{max-width:100%}
+@media(max-width:640px){
+  .app{padding:8px;width:100vw;max-width:100vw}
+  .topbar{width:auto;max-width:none;margin-left:-8px;margin-right:-8px}
+  .grid{width:100%;min-width:0}
+  .panel,.hero{width:100%;min-width:0}
+  .setup-row,.player-add,.player-row,.hero-head,.timerbar,.courts,.nextbar{width:100%;min-width:0}
+  .section-title{width:100%;min-width:0}
+  .player-add{grid-template-columns:minmax(0,1fr) 104px}
+  .player-add input,.player-add select{min-width:0;width:100%}
+  .status-menu{max-width:100%;overflow:hidden}
+  .status-menu select{min-width:0!important;width:100%!important;max-width:100%!important}
+  .modebox{grid-template-columns:max-content minmax(0,1fr)!important}
+  .modebox select{min-width:0!important;width:100%!important}
+  .footer-note,.tiny,.subtle{max-width:100%;overflow-wrap:anywhere}
+  .history{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:580px;max-width:none}
+}
+
+
+/* v4.2 layout correction */
+.grid > *, main, aside{min-width:0}
+.player-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:8px!important;
+}
+.player-row > div:first-child{
+  min-width:0!important;
+  width:100%!important;
+}
+.player-name,.player-row .tiny{
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+}
+.status-menu{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:6px!important;
+  justify-content:stretch!important;
+}
+.status-menu button,.status-menu select{
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  white-space:normal!important;
+}
+.history{min-width:0!important;overflow:hidden!important}
+.history > div:last-child{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:auto!important;
+  -webkit-overflow-scrolling:touch;
+}
+.history table{
+  width:100%!important;
+  min-width:560px!important;
+  max-width:none!important;
+}
+@media(max-width:840px){
+  html,body{overflow-x:hidden!important}
+  .app{width:100%!important;max-width:100%!important}
+  .grid,main,aside,.card,.panel,.hero{width:100%!important;max-width:100%!important;min-width:0!important}
+}
+@media(max-width:640px){
+  .app{width:100%!important;max-width:100%!important;padding:8px!important}
+  .topbar{width:calc(100% + 16px)!important;max-width:none!important}
+  .player-add{grid-template-columns:minmax(0,1fr) 110px!important}
+  .status-menu{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .history table{min-width:540px!important;width:540px!important}
+}
+@media(max-width:390px){
+  .status-menu{grid-template-columns:1fr!important}
+}
+
+
+/* v4.2 — compact desktop court cards only */
+@media (min-width:841px){
+  .courts{gap:12px!important}
+  .court{padding:10px 16px!important;min-height:0!important}
+  .court h3{margin:0 0 6px!important}
+  .court .match{gap:2px!important}
+  .court .team{padding:1px 0!important}
+  .court .vs{margin:0!important;line-height:1!important}
+  .court .result-row{margin-top:6px!important;gap:8px!important}
+  .court .result-row button{padding:6px 10px!important}
+  .nextbar{margin-top:10px!important;padding-top:0!important}
+}
+
+
+  .team-pick{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:5px 7px;border-radius:10px;font:inherit;font-weight:750;cursor:pointer}
+  .team-pick:hover{background:#f1f4f5}
+  .team-pick.selected{background:var(--accent2);color:var(--accent);outline:2px solid var(--accent);}
+  .vs{display:block;width:100%;text-align:center!important;margin-left:0!important;margin-right:0!important}
+  .timer-display.timer-ended{font-size:24px;line-height:1.05;min-width:220px;text-align:center;animation:timerFlash .8s ease-in-out infinite alternate;color:#b42318}
+  @keyframes timerFlash{from{opacity:1;transform:scale(1)}to{opacity:.42;transform:scale(1.04)}}
 
 </style>
-<!-- NextCuatro v3: redesigned mobile-first visual interface -->
 </head>
 <body>
 <div class="app">
@@ -327,7 +362,7 @@ img,svg{max-width:100%}
       <img class="logo logo-img" src="nextcuatro-logo.png" alt="NextCuatro logo">
       <div>
         <h1>NextCuatro</h1>
-        <div class="subtle">Drop in when you can. Play as long as you want.</div><div class="tiny" style="margin-top:2px">Shuffle smart. Leave when you need to. Have fun!</div><div class="tiny" style="margin-top:2px"></div>
+        <div class="subtle">Flexible. Smart. Adaptive.</div>
       </div>
     </div>
     <div class="toolbar">
@@ -339,15 +374,14 @@ img,svg{max-width:100%}
   <div class="grid">
     <aside class="card panel">
       <div class="section-title">
-        <h2>Session</h2>
+        <h2>Available Courts</h2>
         <span class="pill" id="activeCountPill">0 active</span>
       </div>
       <div class="setup-row">
         <div>
-          <label>Courts</label>
           <input id="courtCount" type="number" min="1" max="20" value="4">
         </div>
-        <div>
+        <div style="display:none">
           <label>Court availability</label>
           <select id="sessionEndType">
             <option value="open">Open-ended</option>
@@ -355,7 +389,7 @@ img,svg{max-width:100%}
           </select>
         </div>
       </div>
-      <div id="endTimeWrap" style="display:none;margin-top:10px">
+      <div id="endTimeWrap" style="display:none!important;margin-top:10px">
         <label>Reserved until</label>
         <input id="endTime" type="time">
       </div>
@@ -365,27 +399,13 @@ img,svg{max-width:100%}
       </div>
       <div class="player-add">
         <input id="playerName" placeholder="Name or nickname">
-        <select id="playerSkill" title="Private skill rating">
+        <select id="playerSkill" title="Skill rating">
           <option value="">Unrated</option>
-          <option>1.0</option><option>1.5</option><option>2.0</option><option>2.5</option>
-          <option>3.0</option><option>3.5</option><option>4.0</option><option>4.5</option><option>5.0</option>
+          <option>1.0</option><option>1.25</option><option>1.5</option><option>1.75</option><option>2.0</option><option>2.25</option><option>2.5</option><option>2.75</option><option>3.0</option><option>3.25</option><option>3.5</option><option>3.75</option><option>4.0</option><option>4.25</option><option>4.5</option><option>4.75</option><option>5.0</option><option value="5.25">5.0+</option>
         </select>
         <button class="primary" id="addPlayerBtn">Add</button>
       </div>
       <div id="duplicateNotice" class="notice" style="display:none"></div>
-
-      <div class="team-manager">
-        <div class="section-title" style="margin-top:14px;margin-bottom:8px">
-          <h2 style="font-size:15px">Fixed teams <span class="tiny">(optional)</span></h2>
-        </div>
-        <div class="team-maker">
-          <select id="teamPlayerA" aria-label="First team player"></select>
-          <select id="teamPlayerB" aria-label="Second team player"></select>
-          <button class="secondary" id="makeTeamBtn">Pair</button>
-        </div>
-        <div id="fixedTeamList" class="fixed-team-list"></div>
-        <div class="tiny" style="margin-top:6px">Paired players stay together whenever they are assigned to play. Everyone else remains solo.</div>
-      </div>
 
       <div class="player-list" id="playerList" style="margin-top:12px"></div>
 
@@ -396,7 +416,7 @@ img,svg{max-width:100%}
         </details>
       </div>
 
-      <div class="footer-note">Skill ratings are private and are not shown on the organizer court board.</div>
+      <div class="footer-note"></div>
     </aside>
 
     <main>
@@ -412,7 +432,7 @@ img,svg{max-width:100%}
               <option value="smart">Smart Random</option>
               <option value="similar">Similar Skill</option>
               <option value="balanced">Balanced Teams</option>
-              <option value="mix">Mix-It-Up</option>
+              
             </select>
           </div>
         </div>
@@ -433,13 +453,13 @@ img,svg{max-width:100%}
         </div>
         <div id="courtArea" class="courts"></div>
         <div id="emptyState" class="empty">
-          NextCuatro will build court assignments from whoever is <strong>Active</strong> when you press Next Round.
+          NextCuatro will build court assignments from whoever is <strong>Active</strong> when you press Next Cuatro.
         </div>
 
         <div id="waitingBox" class="waiting" style="display:none"></div>
 
         <div class="nextbar">
-          <div class="subtle" id="reservationNote"></div>
+          <div class="subtle" id="reservationNote" style="display:none"></div>
           <button class="primary" id="nextRoundBtn">🔀 Create Round 1</button>
         </div>
       </section>
@@ -449,10 +469,10 @@ img,svg{max-width:100%}
           <h2>Session fairness</h2>
           <span class="subtle">Rounds, sit-outs, partners</span>
         </div>
-        <div class="history-scroll">
+        <div style="overflow:auto">
           <table>
             <thead>
-              <tr><th>Player</th><th>Played</th><th>Sat Out</th><th>Record</th><th>Different partners</th><th>Status</th></tr>
+              <tr><th>Player</th><th>Played</th><th>Sat</th><th>Record</th><th>Adaptive rating</th><th>Different partners</th><th>Status</th></tr>
             </thead>
             <tbody id="statsBody"></tbody>
           </table>
@@ -461,11 +481,11 @@ img,svg{max-width:100%}
     </main>
   </div>
 </div>
-<div class="footer">NextCuatro · v3.1 · © 2026 Todd Witte</div>
+<div class="footer">NextCuatro · v4.2 · © 2026 Todd Witte</div>
 
 <script>
 (() => {
-  const STORAGE_KEY = 'nextcuatro_v31_state';
+  const STORAGE_KEY = 'nextcuatro_v4_state';
   const defaultState = {
     round: 0,
     courts: 4,
@@ -474,8 +494,7 @@ img,svg{max-width:100%}
     mode: 'smart',
     timerMinutes: 12,
     players: [],
-    currentRound: null,
-    fixedTeams: []
+    currentRound: null
   };
   let state = load();
 
@@ -489,36 +508,23 @@ img,svg{max-width:100%}
     }catch(e){ return structuredClone(defaultState); }
   }
   function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-  state.players=(state.players||[]).map(p=>({wins:0,losses:0,partners:{},opponents:{},played:0,sat:0,lastSatRound:-999,joinedRound:0,status:'active',...p}));
-  state.fixedTeams = Array.isArray(state.fixedTeams) ? state.fixedTeams.filter(t=>state.players.some(p=>p.id===t.a)&&state.players.some(p=>p.id===t.b)) : [];
+  state.players=(state.players||[]).map(p=>({
+    wins:0,losses:0,partners:{},opponents:{},played:0,sat:0,lastSatRound:-999,
+    joinedRound:0,status:'active',fixedPartnerId:null,sitNext:false,
+    adaptiveRating:null,resultGames:0,...p
+  }));
+  state.players.forEach(p=>{
+  if(p.status==='leaving') p.status='active';
+  if(p.skill==null && (p.resultGames||0)===0) p.adaptiveRating=null;
+  else if(p.adaptiveRating==null && p.skill!=null) p.adaptiveRating=p.skill;
+  if(p.useAdaptive==null) p.useAdaptive=false;
+});
 
-  function activePlayers(){ return state.players.filter(p => p.status === 'active' || p.status === 'leaving'); }
+  function activePlayers(){
+    return state.players.filter(p => (p.status === 'active' || p.status === 'leaving') && !p.sitNext);
+  }
   function normalizedName(s){ return s.trim().replace(/\s+/g,' ').toLowerCase(); }
-
-  function teamForPlayer(id){ return state.fixedTeams.find(t=>t.a===id || t.b===id) || null; }
-  function areFixedPartners(a,b){
-    const t=teamForPlayer(a.id);
-    return !!t && (t.a===b.id || t.b===b.id);
-  }
-  function createFixedTeam(){
-    const a=$('teamPlayerA').value, b=$('teamPlayerB').value;
-    if(!a || !b || a===b) return;
-    if(teamForPlayer(a) || teamForPlayer(b)){ alert('One of those players is already on a fixed team. Unpair them first.'); return; }
-    state.fixedTeams.push({id:uid(),a,b}); save(); render();
-  }
-  function removeFixedTeam(id){ state.fixedTeams=state.fixedTeams.filter(t=>t.id!==id); save(); render(); }
-  function renderFixedTeams(){
-    const candidates=state.players.filter(p=>p.status!=='left' && !teamForPlayer(p.id));
-    const options='<option value="">Choose player…</option>'+candidates.map(p=>`<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('');
-    $('teamPlayerA').innerHTML=options; $('teamPlayerB').innerHTML=options;
-    const box=$('fixedTeamList'); box.innerHTML='';
-    for(const t of state.fixedTeams){
-      const a=state.players.find(p=>p.id===t.a), b=state.players.find(p=>p.id===t.b); if(!a||!b) continue;
-      const row=document.createElement('div'); row.className='fixed-team-chip';
-      row.innerHTML=`<strong>🤝 ${escapeHtml(a.name)} + ${escapeHtml(b.name)}</strong><button class="secondary">Unpair</button>`;
-      row.querySelector('button').onclick=()=>removeFixedTeam(t.id); box.appendChild(row);
-    }
-  }
+  function rating(p){ return (p.useAdaptive!==false && Number.isFinite(p.adaptiveRating)) ? p.adaptiveRating : (p.skill ?? 3.0); }
 
   function addPlayer(){
     const raw = $('playerName').value.trim().replace(/\s+/g,' ');
@@ -534,10 +540,22 @@ img,svg{max-width:100%}
     state.players.push({
       id:uid(), name:raw, skill, status:'active',
       played:0, sat:0, lastSatRound:-999, joinedRound:state.round,
-      partners:{}, opponents:{}, wins:0, losses:0
+      partners:{}, opponents:{}, wins:0, losses:0,
+      fixedPartnerId:null, sitNext:false, adaptiveRating:skill, resultGames:0, useAdaptive:false
     });
     $('playerName').value='';
     $('playerSkill').value='';
+    save(); render();
+  }
+
+  function setSkill(id,value){
+    const p=state.players.find(x=>x.id===id);
+    if(!p) return;
+    const newSkill=value===''?null:Number(value);
+    p.skill=Number.isFinite(newSkill)?newSkill:null;
+    // If no adaptive estimate has actually developed yet, use the newly
+    // entered self-rating as its starting estimate. Preserve learned ratings.
+    if((p.resultGames||0)<=3 || !Number.isFinite(p.adaptiveRating)) p.adaptiveRating=p.skill;
     save(); render();
   }
 
@@ -545,63 +563,52 @@ img,svg{max-width:100%}
     const p = state.players.find(x=>x.id===id);
     if(!p) return;
     p.status = status;
-    if(status==='left'){ const t=teamForPlayer(id); if(t) state.fixedTeams=state.fixedTeams.filter(x=>x.id!==t.id); }
+    if(status!=='active') p.sitNext=false;
     save(); render();
+  }
+
+  function toggleSit(id){
+    const p=state.players.find(x=>x.id===id);
+    if(!p) return;
+    const next=!p.sitNext;
+    p.sitNext=next;
+    // A fixed pair is a team in every mode; voluntary Sit Out applies to both.
+    if(p.fixedPartnerId){
+      const q=state.players.find(x=>x.id===p.fixedPartnerId);
+      if(q && (q.status==='active'||q.status==='leaving')) q.sitNext=next;
+    }
+    save();render();
+  }
+
+  function setPair(id,partnerId){
+    const p=state.players.find(x=>x.id===id);
+    if(!p) return;
+    if(p.fixedPartnerId){
+      const old=state.players.find(x=>x.id===p.fixedPartnerId);
+      if(old && old.fixedPartnerId===p.id) old.fixedPartnerId=null;
+      p.fixedPartnerId=null;
+    }
+    if(partnerId){
+      const q=state.players.find(x=>x.id===partnerId);
+      if(!q || q.id===p.id) return;
+      if(q.fixedPartnerId){
+        const old=state.players.find(x=>x.id===q.fixedPartnerId);
+        if(old && old.fixedPartnerId===q.id) old.fixedPartnerId=null;
+        q.fixedPartnerId=null;
+      }
+      p.fixedPartnerId=q.id; q.fixedPartnerId=p.id;
+    }
+    save();render();
   }
 
   function restorePlayer(id){
     const p = state.players.find(x=>x.id===id);
-    if(p){ p.status='active'; save(); render(); }
+    if(p){ p.status='active'; p.sitNext=false; save(); render(); }
   }
 
   function incrementMap(obj,key){ obj[key]=(obj[key]||0)+1; }
-
   function partnerCount(a,b){ return a.partners[b.id] || 0; }
   function opponentCount(a,b){ return a.opponents[b.id] || 0; }
-
-  function playPriority(p){
-    const recentSit = state.round - p.lastSatRound <= 1 ? 1000 : 0;
-    const newBoost = state.round - p.joinedRound <= 1 ? 500 : 0;
-    return p.sat*120 + recentSit + newBoost - p.played*10 + Math.random()*8;
-  }
-
-  function makeUnits(players){
-    const ids=new Set(players.map(p=>p.id));
-    const used=new Set(), units=[];
-    for(const p of players){
-      if(used.has(p.id)) continue;
-      const t=teamForPlayer(p.id);
-      if(t && ids.has(t.a) && ids.has(t.b)){
-        const a=state.players.find(x=>x.id===t.a), b=state.players.find(x=>x.id===t.b);
-        units.push({players:[a,b],size:2,score:playPriority(a)+playPriority(b)}); used.add(a.id); used.add(b.id);
-      } else { units.push({players:[p],size:1,score:playPriority(p)}); used.add(p.id); }
-    }
-    return units;
-  }
-
-  function chooseParticipants(players, capacity){
-    if(players.length <= capacity) return {playing:[...players], waiting:[]};
-    const units=makeUnits(players);
-    // DP: choose units totaling capacity, maximizing priority-to-play.
-    let dp=Array(capacity+1).fill(null); dp[0]={score:0,idx:[]};
-    units.forEach((u,i)=>{
-      for(let c=capacity;c>=u.size;c--){
-        if(!dp[c-u.size]) continue;
-        const cand={score:dp[c-u.size].score+u.score,idx:[...dp[c-u.size].idx,i]};
-        if(!dp[c] || cand.score>dp[c].score) dp[c]=cand;
-      }
-    });
-    const chosen=dp[capacity];
-    if(!chosen){
-      // Rare parity fallback: avoid splitting teams by reducing one court if needed.
-      for(let c=capacity-1;c>=4;c--){ if(c%4===0 && dp[c]) return chooseParticipants(players,c); }
-      return {playing:players.slice(0,capacity),waiting:players.slice(capacity)};
-    }
-    const chosenSet=new Set(chosen.idx);
-    const playing=[],waiting=[];
-    units.forEach((u,i)=>(chosenSet.has(i)?playing:waiting).push(...u.players));
-    return {playing,waiting};
-  }
 
   function shuffle(arr){
     const a=[...arr];
@@ -614,105 +621,214 @@ img,svg{max-width:100%}
 
   function teamPairings(group){
     const [a,b,c,d]=group;
-    return [
-      [[a,b],[c,d]],
-      [[a,c],[b,d]],
-      [[a,d],[b,c]]
-    ];
+    return [[[a,b],[c,d]],[[a,c],[b,d]],[[a,d],[b,c]]];
   }
-
-  function teamBalanceCost(pairing){
-    const s = t => t.reduce((sum,p)=>sum+(p.skill ?? 3),0);
-    return Math.abs(s(pairing[0])-s(pairing[1]));
-  }
-
+  function teamTotal(team){ return team.reduce((s,p)=>s+rating(p),0); }
+  function teamBalanceCost(pairing){ return Math.abs(teamTotal(pairing[0])-teamTotal(pairing[1])); }
   function repeatCost(pairing, opponentWeight=.35){
     const [[a,b],[c,d]]=pairing;
-    let cost=(partnerCount(a,b)+partnerCount(c,d))*8;
+    let cost=(partnerCount(a,b)+partnerCount(c,d))*10;
     for(const x of [a,b]) for(const y of [c,d]) cost += opponentCount(x,y)*opponentWeight;
     return cost;
   }
-
-  function groupRepeatCost(group){
-    let c=0;
-    for(let i=0;i<group.length;i++){
-      for(let j=i+1;j<group.length;j++){
-        c += partnerCount(group[i],group[j])*4 + opponentCount(group[i],group[j]);
+  function respectsFixed(pairing){
+    for(const team of pairing){
+      for(const p of team){
+        if(p.fixedPartnerId && !team.some(x=>x.id===p.fixedPartnerId)) return false;
       }
     }
-    return c;
-  }
-
-  function validTeamPairings(group){
-    const opts=teamPairings(group);
-    return opts.filter(opt=>{
-      const pairs=[[opt[0][0],opt[0][1]],[opt[1][0],opt[1][1]]];
-      for(const p of group){
-        const t=teamForPlayer(p.id);
-        if(!t) continue;
-        const mate=group.find(x=>x.id===(t.a===p.id?t.b:t.a));
-        if(mate && !pairs.some(([x,y])=>(x.id===p.id&&y.id===mate.id)||(y.id===p.id&&x.id===mate.id))) return false;
-      }
-      return true;
-    });
+    return true;
   }
   function bestTeams(group, mode){
-    const options=validTeamPairings(group);
-    if(!options.length) return teamPairings(group)[0];
+    const valid=teamPairings(group).filter(respectsFixed);
+    const options=valid.length?valid:teamPairings(group);
     let best=options[0], bestCost=Infinity;
     for(const opt of options){
-      let cost=repeatCost(opt, mode==='mix'?1.5:.35);
-      if(mode==='balanced' || mode==='similar') cost += teamBalanceCost(opt)*7;
-      if(mode==='smart') cost += teamBalanceCost(opt)*.3;
-      if(mode==='mix') cost += teamBalanceCost(opt)*.5;
+      let cost=repeatCost(opt,.4);
+      if(mode==='balanced'){
+        const diff=teamBalanceCost(opt);
+        cost += diff<=.25 ? diff*2 : diff<=.5 ? 2+diff*5 : 20+diff*20;
+      } else if(mode==='similar'){
+        cost += teamBalanceCost(opt)*2;
+      } else {
+        cost += teamBalanceCost(opt)*.05; // Smart Random is not skill-driven.
+      }
+      cost += Math.random()*.25;
       if(cost<bestCost){best=opt;bestCost=cost;}
     }
     return best;
   }
+  function groupRepeatCost(group){
+    let c=0;
+    for(let i=0;i<group.length;i++) for(let j=i+1;j<group.length;j++)
+      c += partnerCount(group[i],group[j])*4 + opponentCount(group[i],group[j]);
+    return c;
+  }
 
-  function packUnits(units){
-    const groups=[];
-    for(const u of units){
-      let choices=groups.map((g,i)=>({g,i,space:4-g.length})).filter(x=>x.space>=u.size);
-      if(!choices.length) groups.push([...u.players]);
-      else { choices.sort((a,b)=>a.space-b.space); groups[choices[0].i].push(...u.players); }
+  function makeUnits(players){
+    const ids=new Set(players.map(p=>p.id)), used=new Set(), units=[];
+    for(const p of players){
+      if(used.has(p.id)) continue;
+      const q=p.fixedPartnerId ? state.players.find(x=>x.id===p.fixedPartnerId) : null;
+      if(q && ids.has(q.id) && !used.has(q.id)){
+        units.push([p,q]); used.add(p.id);used.add(q.id);
+      } else { units.push([p]);used.add(p.id); }
     }
-    return groups.length && groups.every(g=>g.length===4) ? groups : null;
+    return units;
   }
 
-  function courtSkillSpread(g){
-    const vals=g.map(p=>p.skill??3); return Math.max(...vals)-Math.min(...vals);
+  function sitScore(p){
+    // Lower score = more eligible to sit. Strongly protect anyone who has
+    // already sat more often, sat last round, or just joined the session.
+    const recent = state.round-p.lastSatRound<=1 ? 5000 : 0;
+    const newcomer = state.round-p.joinedRound<=1 ? 2500 : 0;
+    return p.sat*1200 + recent + newcomer - p.played*20 + Math.random()*6;
   }
-  function buildWithTeams(players,mode){
+
+  function chooseParticipants(players, capacity, mode){
+    if(players.length<=capacity) return {playing:[...players],waiting:[]};
     const units=makeUnits(players);
     let best=null,bestCost=Infinity;
-    const trials=Math.min(500,100+players.length*14);
-    for(let t=0;t<trials;t++){
-      let ordered;
-      if(mode==='similar' && t<Math.floor(trials*.35)) ordered=[...units].sort((a,b)=>((b.players.reduce((s,p)=>s+(p.skill??3),0)/b.size)-(a.players.reduce((s,p)=>s+(p.skill??3),0)/a.size)));
-      else ordered=shuffle(units);
-      const groups=packUnits(ordered); if(!groups) continue;
-      let cost=0;
-      for(const g of groups){
-        cost += groupRepeatCost(g)*(mode==='mix'?3:1);
-        const pair=bestTeams(g,mode);
-        if(mode==='balanced') cost += teamBalanceCost(pair)*8;
-        if(mode==='similar') cost += courtSkillSpread(g)*8 + teamBalanceCost(pair)*3;
-        if(mode==='smart') cost += teamBalanceCost(pair)*.5;
-        if(mode==='mix') cost += teamBalanceCost(pair)*.35;
+    // Choose whole fixed-pair units whenever an exact-capacity solution exists.
+    for(let t=0;t<900;t++){
+      const order=shuffle(units), waiting=[], playing=[]; let slots=capacity;
+      for(const u of order){
+        if(u.length<=slots){playing.push(...u);slots-=u.length;} else waiting.push(...u);
       }
-      if(cost<bestCost){best=groups;bestCost=cost;}
+      if(playing.length!==capacity) continue;
+      let cost=waiting.reduce((sum,p)=>sum+sitScore(p),0);
+      // Similar Skill still prioritizes global sit fairness, with a small preference
+      // for a playing pool that can form close-skill courts.
+      if(mode==='similar'){
+        const r=[...playing].sort((a,b)=>rating(b)-rating(a));
+        for(let i=0;i<r.length;i+=4){const g=r.slice(i,i+4);if(g.length===4)cost+=(rating(g[0])-rating(g[3]))*18;}
+      }
+      if(cost<bestCost){best={playing,waiting};bestCost=cost;}
     }
-    if(!best){
-      const groups=packUnits(units);
-      if(!groups) throw new Error('Could not create valid courts without splitting a fixed team.');
-      best=groups;
+    if(best) return best;
+
+    // Rare fallback: if pair sizes make exact court capacity impossible, allow one
+    // member of a fixed pair to sit. This is the only circumstance that splits a pair.
+    const sorted=[...players].sort((a,b)=>sitScore(a)-sitScore(b));
+    const waitCount=players.length-capacity;
+    const waiting=sorted.slice(0,waitCount), wids=new Set(waiting.map(p=>p.id));
+    return {playing:players.filter(p=>!wids.has(p.id)),waiting};
+  }
+
+  function buildSmart(players){
+    let best=null,bestCost=Infinity;
+    const trials=Math.min(500,80+players.length*15);
+    for(let t=0;t<trials;t++){
+      const arr=shuffle(players), groups=[]; let cost=0, ok=true;
+      for(let i=0;i<arr.length;i+=4){
+        const g=arr.slice(i,i+4);
+        if(g.length<4){ok=false;break;}
+        // fixed partners must land in same group
+        for(const p of g) if(p.fixedPartnerId && !g.some(x=>x.id===p.fixedPartnerId)){ok=false;break;}
+        if(!ok) break;
+        groups.push(g); cost+=groupRepeatCost(g);
+      }
+      cost += Math.random()*3; // preserve random feel among similarly good solutions
+      if(ok && cost<bestCost){best=groups;bestCost=cost;}
     }
-    return best.map(g=>bestTeams(g,mode));
+    if(!best) best=[]; 
+    if(!best.length){
+      const arr=[...players]; for(let i=0;i<arr.length;i+=4) best.push(arr.slice(i,i+4));
+    }
+    return best.map(g=>bestTeams(g,'smart'));
+  }
+
+  function buildSimilar(players){
+    // Fixed pairs are indivisible teammates. Search court compositions that keep
+    // pairs together while minimizing skill spread, then order courts high-to-low.
+    const units=makeUnits(players);
+    let best=null,bestCost=Infinity;
+    const trials=Math.min(1800,500+players.length*55);
+    for(let t=0;t<trials;t++){
+      const order=shuffle(units), groups=[]; let current=[],ok=true;
+      for(const u of order){
+        if(current.length+u.length>4){ok=false;break;}
+        current.push(...u);
+        if(current.length===4){groups.push(current);current=[];}
+      }
+      if(!ok||current.length||groups.length*4!==players.length) continue;
+      let cost=0; const pairings=[];
+      for(const g of groups){
+        const rs=g.map(rating);
+        cost+=(Math.max(...rs)-Math.min(...rs))*45 + groupRepeatCost(g)*.6;
+        const pairing=bestTeams(g,'similar');
+        if(!respectsFixed(pairing)){ok=false;break;}
+        pairings.push(pairing);
+      }
+      if(ok&&cost<bestCost){best=pairings;bestCost=cost;}
+    }
+    if(!best) return buildSmart(players);
+    best.sort((x,y)=>{
+      const ax=x.flat().reduce((s,p)=>s+rating(p),0)/4;
+      const ay=y.flat().reduce((s,p)=>s+rating(p),0)/4;
+      return ay-ax;
+    });
+    return best;
+  }
+
+  function buildBalanced(players){
+    // Search many random court compositions; primary objective is team-total balance,
+    // then new partners/opponents. Fixed pairs stay together.
+    let best=null,bestCost=Infinity;
+    const trials=Math.min(1200,250+players.length*35);
+    for(let t=0;t<trials;t++){
+      const arr=shuffle(players), groups=[]; let ok=true,cost=0;
+      for(let i=0;i<arr.length;i+=4){
+        const g=arr.slice(i,i+4);
+        for(const p of g) if(p.fixedPartnerId && !g.some(x=>x.id===p.fixedPartnerId)){ok=false;break;}
+        if(!ok) break;
+        const pairing=bestTeams(g,'balanced');
+        const diff=teamBalanceCost(pairing);
+        cost += diff<=.25 ? diff*2 : diff<=.5 ? 2+diff*8 : 30+diff*30;
+        cost += repeatCost(pairing,.5);
+        groups.push(pairing);
+      }
+      if(ok && cost<bestCost){best=groups;bestCost=cost;}
+    }
+    if(best) return best;
+    return buildSmart(players).map(pair=>bestTeams(pair.flat(),'balanced'));
+  }
+
+  function expectedScore(teamA,teamB){
+    const a=teamTotal(teamA)/2,b=teamTotal(teamB)/2;
+    return 1/(1+Math.pow(10,(b-a)/1.5));
+  }
+  function finalizeAdaptiveResults(){
+    const cr=state.currentRound;
+    if(!cr || cr.adaptiveApplied) return;
+    (cr.results||[]).forEach((winner,idx)=>{
+      if(!winner) return;
+      const court=cr.courts[idx];
+      const A=court[0].map(id=>state.players.find(p=>p.id===id)).filter(Boolean);
+      const B=court[1].map(id=>state.players.find(p=>p.id===id)).filter(Boolean);
+      const expA=expectedScore(A,B), actualA=winner==='A'?1:0;
+      const delta=actualA-expA;
+      for(const p of A){
+        p.resultGames=(p.resultGames||0)+1;
+        if(p.resultGames>3){
+          const k=p.resultGames<=5?.12:p.resultGames<=10?.08:.05;
+          p.adaptiveRating=Math.max(1,Math.min(5,(Number.isFinite(p.adaptiveRating)?p.adaptiveRating:3.0)+k*delta));
+        }
+      }
+      for(const p of B){
+        p.resultGames=(p.resultGames||0)+1;
+        if(p.resultGames>3){
+          const k=p.resultGames<=5?.12:p.resultGames<=10?.08:.05;
+          p.adaptiveRating=Math.max(1,Math.min(5,(Number.isFinite(p.adaptiveRating)?p.adaptiveRating:3.0)-k*delta));
+        }
+      }
+    });
+    cr.adaptiveApplied=true;
   }
 
   function makeRound(){
     if(state.currentRound){
+      finalizeAdaptiveResults();
       finalizeLeavers();
     }
     state.courts = Math.max(1, Number($('courtCount').value)||1);
@@ -720,6 +836,7 @@ img,svg{max-width:100%}
     state.endType = $('sessionEndType').value;
     state.endTime = $('endTime').value;
 
+    const voluntarySitters=state.players.filter(p=>(p.status==='active'||p.status==='leaving') && p.sitNext);
     const actives=activePlayers();
     if(actives.length<4){
       alert('You need at least 4 active players to create a round.');
@@ -727,15 +844,27 @@ img,svg{max-width:100%}
     }
     const fullCourts=Math.min(state.courts, Math.floor(actives.length/4));
     const capacity=fullCourts*4;
-    const {playing,waiting}=chooseParticipants(actives,capacity);
+    const {playing,waiting}=chooseParticipants(actives,capacity,state.mode);
+    // Voluntary one-round sitters are displayed with everyone sitting this round,
+    // but they do not count as algorithm-assigned fairness sit-outs.
+    const displayWaiting=[...waiting,...voluntarySitters];
 
     let courts;
-    try{ courts=buildWithTeams(playing,state.mode); }
-    catch(e){ alert(e.message); return; }
+    if(state.mode==='similar') courts=buildSimilar(playing);
+    else if(state.mode==='balanced') courts=buildBalanced(playing);
+    else courts=buildSmart(playing);
 
     state.round += 1;
 
-    // Update statistics/history
+    // "Sit Out" lasts exactly one round. It counts as a real sit for fairness,
+    // so the player is strongly protected from sitting again immediately.
+    voluntarySitters.forEach(p=>{
+      p.sitNext=false;
+      p.sat += 1;
+      p.lastSatRound = state.round;
+    });
+
+    // Update algorithm-assigned sit statistics/history.
     for(const p of waiting){
       p.sat += 1;
       p.lastSatRound = state.round;
@@ -753,7 +882,7 @@ img,svg{max-width:100%}
     state.currentRound = {
       number:state.round,
       courts:courts.map(pair=>pair.map(team=>team.map(p=>p.id))),
-      waiting:waiting.map(p=>p.id),
+      waiting:displayWaiting.map(p=>p.id),
       mode:state.mode,
       results:courts.map(()=>null)
     };
@@ -769,21 +898,35 @@ img,svg{max-width:100%}
     const visible=state.players.filter(p=>p.status!=='left');
     for(const p of visible){
       const row=document.createElement('div');
-      row.className='player-row '+(p.status==='temp'?'temp':'')+(p.status==='leaving'?'leaving':'');
+      row.className='player-row '+(p.sitNext?'temp ':'')+(p.status==='leaving'?'leaving':'');
+      const partner=state.players.find(x=>x.id===p.fixedPartnerId);
+      const skillValues=['','1.0','1.25','1.5','1.75','2.0','2.25','2.5','2.75','3.0','3.25','3.5','3.75','4.0','4.25','4.5','4.75','5.0','5.25'];
+      const skillOptions=skillValues.map(v=>`<option value="${v}" ${(v===''&&p.skill==null)||(v!==''&&Number(v)===p.skill)?'selected':''}>${v===''?'Unrated':(v==='5.25'?'5.0+':v)}</option>`).join('');
+      const pairOptions=visible.filter(x=>x.id!==p.id && !x.sitNext).map(x=>
+        `<option value="${x.id}" ${p.fixedPartnerId===x.id?'selected':''}>Pair: ${escapeHtml(x.name)}</option>`).join('');
       row.innerHTML=`
-        <div>
-          <div class="player-name">${escapeHtml(p.name)}</div>
-          <div class="tiny">${p.skill ? 'Private skill '+p.skill : 'Unrated'} · ${statusLabel(p.status)}${teamForPlayer(p.id)?' · Fixed team':''}</div>
+        <div style="min-width:0">
+          <div class="player-name" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span>${escapeHtml(p.name)}</span>
+            <select data-action="skill" title="Player skill rating" style="width:auto;min-width:92px;padding:4px 6px">${skillOptions}</select>
+          </div>
+          <div class="tiny">${statusLabel(p.status)}${partner?' · Team: '+escapeHtml(partner.name):''}</div>
         </div>
         <div class="status-menu">
-          ${p.status!=='active'?`<button data-action="active">Active</button>`:''}
-          <button data-action="temp">Break</button>
-          <button data-action="leaving">Leave after round</button>
-          <button data-action="left">Done</button>
+          <button data-action="sit" class="${p.sitNext?'selected':''}">Sit Out</button>
+          <select data-action="pair" title="Fixed team for this session" style="max-width:150px">
+            <option value="">Solo</option>${pairOptions}
+          </select>
+         
+          <button data-action="adaptive" class="${p.useAdaptive===true && Number.isFinite(p.adaptiveRating)?'selected':''}" ${!Number.isFinite(p.adaptiveRating)?'disabled':''}>Adaptive: ${Number.isFinite(p.adaptiveRating) ? (p.useAdaptive===true?'ON':'OFF') : '—'}</button>
+          <button data-action="left">Done Playing</button>
         </div>`;
-      row.querySelectorAll('button[data-action]').forEach(btn=>{
-        btn.onclick=()=>setStatus(p.id,btn.dataset.action);
-      });
+      row.querySelector('[data-action="sit"]').onclick=()=>toggleSit(p.id);
+      row.querySelector('[data-action="skill"]').onchange=e=>setSkill(p.id,e.target.value);
+      row.querySelector('[data-action="pair"]').onchange=e=>setPair(p.id,e.target.value||null);
+     
+      row.querySelector('[data-action="adaptive"]').onclick=()=>{if(!Number.isFinite(p.adaptiveRating))return;p.useAdaptive=p.useAdaptive!==true;save();render();};
+      row.querySelector('[data-action="left"]').onclick=()=>setStatus(p.id,'left');
       list.appendChild(row);
     }
 
@@ -814,7 +957,7 @@ img,svg{max-width:100%}
     apply(prev,-1); cr.results[courtIndex]=winner; apply(winner,1);
     save();render();
   }
-  function finalizeLeavers(){ const leaving=state.players.filter(p=>p.status==='leaving').map(p=>p.id); state.players.forEach(p=>{if(p.status==='leaving')p.status='left'}); state.fixedTeams=state.fixedTeams.filter(t=>!leaving.includes(t.a)&&!leaving.includes(t.b)); }
+  function finalizeLeavers(){}
 
   function renderRound(){
     const area=$('courtArea'); area.innerHTML='';
@@ -830,7 +973,7 @@ img,svg{max-width:100%}
     $('emptyState').style.display='none';
     $('roundTitle').textContent=`Round ${cr.number}`;
     const activeN=activePlayers().length;
-    $('statsLine').textContent=`${cr.courts.length} courts · ${activeN} currently active · ${cr.waiting.length} waiting this round`;
+    $('statsLine').textContent=`${cr.courts.length} courts · ${activeN} currently active · ${cr.waiting.length} sitting this round out`;
     cr.courts.forEach((court,idx)=>{
       const card=document.createElement('div');
       card.className='court';
@@ -839,21 +982,17 @@ img,svg{max-width:100%}
       const result=(cr.results||[])[idx]??null;
       card.innerHTML=`
         <h3>COURT ${idx+1}</h3>
-        <div class="team">${escapeHtml(t1[0])} + ${escapeHtml(t1[1])}</div>
+        <button class="team team-pick ${result==='A'?'selected':''}" data-result="A" title="Tap to record this team as winner">${escapeHtml(t1[0])} + ${escapeHtml(t1[1])}</button>
         <div class="vs">vs.</div>
-        <div class="team">${escapeHtml(t2[0])} + ${escapeHtml(t2[1])}</div>
-        <div class="result-buttons">
-          <button class="${result==='A'?'selected':''}" data-result="A">${escapeHtml(t1[0])} + ${escapeHtml(t1[1])} WON</button>
-          <button class="${result==='B'?'selected':''}" data-result="B">${escapeHtml(t2[0])} + ${escapeHtml(t2[1])} WON</button>
-        </div>`;
+        <button class="team team-pick ${result==='B'?'selected':''}" data-result="B" title="Tap to record this team as winner">${escapeHtml(t2[0])} + ${escapeHtml(t2[1])}</button>`;
       card.querySelectorAll('[data-result]').forEach(btn=>btn.onclick=()=>recordResult(idx,btn.dataset.result));
       area.appendChild(card);
     });
     if(cr.waiting.length){
       $('waitingBox').style.display='block';
-      $('waitingBox').innerHTML=`<strong>Waiting this round:</strong> ${cr.waiting.map(nameById).map(escapeHtml).join(', ')}`;
+      $('waitingBox').innerHTML=`<strong>Sitting this round out:</strong> ${cr.waiting.map(nameById).map(escapeHtml).join(', ')}`;
     } else $('waitingBox').style.display='none';
-    $('nextRoundBtn').textContent=`🔀 Next Round`;
+    $('nextRoundBtn').textContent=`🔀 Next Cuatro`;
   }
 
   function renderStats(){
@@ -866,6 +1005,7 @@ img,svg{max-width:100%}
         <td>${p.played}</td>
         <td>${p.sat}</td>
         <td>${p.wins||0}–${p.losses||0}</td>
+        <td>${Number.isFinite(p.adaptiveRating) ? Number(p.adaptiveRating).toFixed(2) : '—'}</td>
         <td>${Object.keys(p.partners).length}</td>
         <td>${statusLabel(p.status)}</td>`;
       body.appendChild(tr);
@@ -873,7 +1013,7 @@ img,svg{max-width:100%}
   }
 
   function statusLabel(s){
-    return ({active:'Active',temp:'Temporarily out',leaving:'Leaving after this round',left:'Left session'})[s]||s;
+    return ({active:'Active',leaving:'Leaving after this round',left:'Left session'})[s]||s;
   }
 
   function renderReservation(){
@@ -889,7 +1029,7 @@ img,svg{max-width:100%}
     $('endTime').value=state.endTime;
     $('modeSelect').value=state.mode;
     $('timerMinutes').value=String(state.timerMinutes??12);
-    renderPlayers(); renderFixedTeams(); renderRound(); renderStats(); renderReservation();
+    renderPlayers(); renderRound(); renderStats(); renderReservation();
   }
 
   function escapeHtml(s){
@@ -906,25 +1046,43 @@ img,svg{max-width:100%}
   let timerInterval=null,timerRemaining=(state.timerMinutes||12)*60;
   function renderTimer(){
     const mins=Number($('timerMinutes').value);
-    if(mins===0&&!timerInterval){$('timerDisplay').textContent='Manual';return;}
+    if(mins===0&&!timerInterval){$('timerDisplay').classList.remove('timer-ended');$('timerDisplay').textContent='Manual';return;}
     const m=Math.floor(timerRemaining/60),s=timerRemaining%60;
-    $('timerDisplay').textContent=`${m}:${String(s).padStart(2,'0')}`;
+    $('timerDisplay').classList.remove('timer-ended');$('timerDisplay').textContent=`${m}:${String(s).padStart(2,'0')}`;
   }
   function resetTimer(){
     if(timerInterval){clearInterval(timerInterval);timerInterval=null}
     const mins=Number($('timerMinutes').value);state.timerMinutes=mins;save();
     timerRemaining=mins*60;$('timerStartBtn').textContent='Start';renderTimer();
   }
+  let audioCtx=null;
+  function ensureAudio(){
+    try{if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();}catch(e){}
+  }
+  function playEndAlert(){
+    try{
+      ensureAudio(); if(!audioCtx)return;
+      const now=audioCtx.currentTime+.03;
+      const starts=[0,.48,.96,1.85,2.33,2.81];
+      starts.forEach((off,i)=>{
+        const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+        o.type='square';o.frequency.value=[880,1047,880,880,1047,880][i];
+        g.gain.setValueAtTime(.0001,now+off);g.gain.exponentialRampToValueAtTime(.34,now+off+.018);
+        g.gain.setValueAtTime(.34,now+off+.27);g.gain.exponentialRampToValueAtTime(.0001,now+off+.38);
+        o.connect(g);g.connect(audioCtx.destination);o.start(now+off);o.stop(now+off+.4);
+      });
+    }catch(e){}
+  }
+
   function toggleTimer(){
-    const mins=Number($('timerMinutes').value);if(mins===0)return;
+    const mins=Number($('timerMinutes').value);if(mins===0)return;ensureAudio();
     if(timerInterval){clearInterval(timerInterval);timerInterval=null;$('timerStartBtn').textContent='Resume';return;}
     if(timerRemaining<=0)timerRemaining=mins*60;
     $('timerStartBtn').textContent='Pause';
-    timerInterval=setInterval(()=>{timerRemaining--;renderTimer();if(timerRemaining<=0){clearInterval(timerInterval);timerInterval=null;$('timerDisplay').textContent='TIME';$('timerStartBtn').textContent='Start';try{navigator.vibrate&&navigator.vibrate([300,150,300])}catch(e){}}},1000);
+    timerInterval=setInterval(()=>{timerRemaining--;renderTimer();if(timerRemaining<=0){clearInterval(timerInterval);timerInterval=null;$('timerDisplay').textContent='END OF TIMED GAME';$('timerDisplay').classList.add('timer-ended');$('timerStartBtn').textContent='Start';playEndAlert();try{navigator.vibrate&&navigator.vibrate([300,150,300,450,300,150,300])}catch(e){}}},1000);
   }
 
   $('addPlayerBtn').onclick=addPlayer;
-  $('makeTeamBtn').onclick=createFixedTeam;
   $('playerName').addEventListener('keydown',e=>{if(e.key==='Enter') addPlayer();});
   $('nextRoundBtn').onclick=()=>{makeRound();if(state.currentRound)resetTimer();};
   $('timerStartBtn').onclick=toggleTimer;

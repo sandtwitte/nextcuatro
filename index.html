@@ -559,7 +559,16 @@ body.g3-tournament-active .app > .grid{display:none!important}
         <input id="playerName" placeholder="Player Name" aria-label="Player Name">
         <select id="playerSkill" title="Skill rating">
           <option value="">Unrated</option>
-          <option value="1.5">Beginner (&lt;2.0)</option><option>2.0</option><option>2.25</option><option>2.5</option><option>2.75</option><option>3.0</option><option>3.25</option><option>3.5</option><option>3.75</option><option>4.0</option><option>4.25</option><option>4.5</option><option>4.75</option><option>5.0</option><option value="5.25">5.0+</option>
+          <option value="word:beginner">Beginner (&lt;2.0)</option>
+          <option value="word:developing">Developing (2.0–2.99)</option>
+          <option value="word:int1">Intermediate 1 (3.0–3.49)</option>
+          <option value="word:int2">Intermediate 2 (3.5–3.99)</option>
+          <option value="word:advanced">Advanced (4.0–4.49)</option>
+          <option value="word:elite">Elite (4.5+)</option>
+          <option value="2.0">2.0</option><option value="2.25">2.25</option><option value="2.5">2.5</option><option value="2.75">2.75</option>
+          <option value="3.0">3.0</option><option value="3.25">3.25</option><option value="3.5">3.5</option><option value="3.75">3.75</option>
+          <option value="4.0">4.0</option><option value="4.25">4.25</option><option value="4.5">4.5</option><option value="4.75">4.75</option>
+          <option value="5.0">5.0</option><option value="5.25">5.0+</option>
         </select>
         <button class="primary" id="addPlayerBtn">Add</button>
       </div>
@@ -701,7 +710,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
       <h3>4. Player Management</h3>
       <p>NextCuatro allows organizers to manage participants as attendance changes.</p>
       <p><strong>Add Player:</strong> Add participants before or during a session.</p>
-      <p><strong>Skill Rating:</strong> Enter a self-reported skill rating or leave a player unrated.</p>
+      <p><strong>Skill Rating:</strong> Select a descriptive skill level (Beginner through Elite), enter a numerical rating (2.0–5.0+), or leave a player unrated. Descriptive levels use representative numerical values for scheduling.</p>
       <p><strong>Pair Players:</strong> Designate two players who prefer to play together. Partnerships can be changed during a session, or players can go solo again.</p>
       <p><strong>Sit Out / Bye:</strong> Allow a player to take a temporary break while remaining part of the session.</p>
       <p><strong>Done Playing / Leave:</strong> Remove a player from active rotation while retaining their session history.</p>
@@ -736,7 +745,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
         <li>Partner variety.</li>
       </ul>
       <h3>Adaptive Skill Ratings</h3>
-      <p>Players who enter an initial skill rating may optionally enable adaptive ratings.</p>
+      <p>Players who enter a numerical skill rating may optionally enable adaptive ratings. Adaptive ratings are OFF for descriptive skill levels; selecting Adaptive prompts the organizer to choose a numerical rating instead.</p>
       <p>When enabled, NextCuatro can gradually adjust their skill rating based on recorded wins and losses against other rated players.</p>
       <p>Players without an initial rating cannot use adaptive adjustments.</p>
       <p>Adaptive ratings are paused in Zoned Play.</p>
@@ -751,11 +760,11 @@ body.g3-tournament-active .app > .grid{display:none!important}
       <p>Session information is stored locally in the browser on the device being used.</p>
       <p>Closing the browser does not necessarily erase the session, but clearing browser data may remove saved information.</p>
       <p><strong>New Session / Clear Everything</strong> requires confirmation before erasing the current session.</p>
-      <p class="feature-version">NextCuatro · Generation 3 · vG3.1.8.3</p>
+      <p class="feature-version">NextCuatro · Generation 3 · vG3.1.8.4</p>
     </div>
   </details>
 </section>
-<div class="footer">© 2026 T. Witte · NextCuatro · All rights reserved. · <a href="mailto:support@nextcuatro.com">support@nextcuatro.com</a> · vG3.1.8.3</div>
+<div class="footer">© 2026 T. Witte · NextCuatro · All rights reserved. · <a href="mailto:support@nextcuatro.com">support@nextcuatro.com</a> · vG3.1.8.4</div>
 
 <div id="pairFairnessModal" class="nc-modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="pairFairnessTitle">
   <div class="nc-modal">
@@ -811,6 +820,21 @@ body.g3-tournament-active .app > .grid{display:none!important}
   };
   let state = load();
   const ZONES=[{id:'beginner',name:'Beginner',range:'below 2.0',color:'#94A3B8',tint:'#F1F5F9',ink:'#102A43'},{id:'developing',name:'Developing',range:'2.0–2.99',color:'#22C55E',tint:'#EAF9EE',ink:'#102A43'},{id:'int1',name:'Intermediate 1',range:'3.0–3.49',color:'#FFF176',tint:'#FFFCE6',ink:'#102A43'},{id:'int2',name:'Intermediate 2',range:'3.5–3.99',color:'#D99A00',tint:'#FFF2D6',ink:'#102A43'},{id:'advanced',name:'Advanced',range:'4.0–4.49',color:'#F97316',tint:'#FFF0E5',ink:'#102A43'},{id:'elite',name:'Elite',range:'4.5+',color:'#DC2626',tint:'#FDECEC',ink:'#fff'}];
+  // Descriptive skill labels are presentation/input metadata; all scheduling continues to use numeric p.skill.
+  const WORD_SKILLS=[
+    {key:'beginner',label:'Beginner (<2.0)',value:1.0},
+    {key:'developing',label:'Developing (2.0–2.99)',value:2.5},
+    {key:'int1',label:'Intermediate 1 (3.0–3.49)',value:3.25},
+    {key:'int2',label:'Intermediate 2 (3.5–3.99)',value:3.75},
+    {key:'advanced',label:'Advanced (4.0–4.49)',value:4.25},
+    {key:'elite',label:'Elite (4.5+)',value:4.75}
+  ];
+  const NUMERIC_SKILLS=['2.0','2.25','2.5','2.75','3.0','3.25','3.5','3.75','4.0','4.25','4.5','4.75','5.0','5.25'];
+  const SKILL_CHOICES=[{value:'',label:'Unrated'},...WORD_SKILLS.map(w=>({value:'word:'+w.key,label:w.label})),...NUMERIC_SKILLS.map(v=>({value:v,label:v==='5.25'?'5.0+':v}))];
+  const skillChoice=value=>{const w=WORD_SKILLS.find(w=>'word:'+w.key===value);return w?{skill:w.value,skillLabel:w.key}:{skill:value===''?null:Number(value),skillLabel:null};};
+  const selectedSkillValue=p=>p.skillLabel && WORD_SKILLS.some(w=>w.key===p.skillLabel)?'word:'+p.skillLabel:(p.skill==null?'':p.skill<2?'word:beginner':p.skill===5.25?'5.25':String(p.skill));
+  const skillDisplay=p=>p.skillLabel ? (WORD_SKILLS.find(w=>w.key===p.skillLabel)?.label.split(' (')[0] || String(p.skill??'—')) : (p.skill===5.25?'5.0+':p.skill==null?'Unrated':String(p.skill));
+  const skillOptionHtml=p=>SKILL_CHOICES.map(o=>`<option value="${o.value}" ${selectedSkillValue(p)===o.value?'selected':''}>${o.label}</option>`).join('');
   const zoneFor=p=>!Number.isFinite(p.skill)?null:p.skill>=4.5?'elite':p.skill>=4?'advanced':p.skill>=3.5?'int2':p.skill>=3?'int1':p.skill>=2?'developing':'beginner';
   const zoneName=id=>{const z=ZONES.find(z=>z.id===id);return z?`${z.name} (${z.range})`:'Unassigned'};
   const zoneColor=id=>ZONES.find(z=>z.id===id)?.color||'#94a3b8';
@@ -844,7 +868,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
   if(p.status==='leaving') p.status='active';
   if(p.skill==null && (p.resultGames||0)===0) p.adaptiveRating=null;
   else if(p.adaptiveRating==null && p.skill!=null) p.adaptiveRating=p.skill;
-  if(p.useAdaptive==null) p.useAdaptive=false;
+  if(p.useAdaptive==null || p.skillLabel) p.useAdaptive=false;
 });
 
   function activePlayers(){
@@ -885,10 +909,10 @@ body.g3-tournament-active .app > .grid{display:none!important}
       return;
     }
     $('duplicateNotice').style.display = 'none';
-    const skill = $('playerSkill').value ? Number($('playerSkill').value) : null;
+    const {skill,skillLabel} = skillChoice($('playerSkill').value);
     if(isZoned() && skill===null){ncAlert('Zoned Play requires a skill level. Select Beginner or a rating of 2.0 or higher.');$('playerSkill').focus();return;}
     state.players.push({
-      id:uid(), name:raw, skill, status:'active',
+      id:uid(), name:raw, skill, skillLabel, status:'active',
       played:0, sat:0, lastSatRound:-999, joinedRound:state.round,
       fairnessOffset:arrivalBaseline(null), firstGamePriority:true,
       partners:{}, opponents:{}, courtVisits:{}, wins:0, losses:0,
@@ -903,12 +927,15 @@ body.g3-tournament-active .app > .grid{display:none!important}
   function setSkill(id,value){
     const p=state.players.find(x=>x.id===id);
     if(!p) return;
-    const newSkill=value===''?null:Number(value);
+    const {skill:newSkill,skillLabel} = skillChoice(value);
     if(isZoned() && newSkill===null){ncAlert('Zoned Play requires a skill level. Select Beginner or a rating of 2.0 or higher.');render();return;}
+    const wasDescriptive=Boolean(p.skillLabel);
     p.skill=Number.isFinite(newSkill)?newSkill:null;
+    p.skillLabel=skillLabel;
+    if(skillLabel) p.useAdaptive=false;
     // If no adaptive estimate has actually developed yet, use the newly
     // entered self-rating as its starting estimate. Preserve learned ratings.
-    if((p.resultGames||0)<=3 || !Number.isFinite(p.adaptiveRating)) p.adaptiveRating=p.skill;
+    if(wasDescriptive || skillLabel || (p.resultGames||0)<=3 || !Number.isFinite(p.adaptiveRating)) p.adaptiveRating=p.skill;
     if(isZoned()){
       const playing=currentPlayingIds().has(p.id);
       if(!playing)moveToZone(p,zoneFor(p));
@@ -1445,23 +1472,26 @@ body.g3-tournament-active .app > .grid{display:none!important}
     const panel=document.createElement('div');panel.style.cssText='background:white;color:#102a43;border-radius:14px;padding:22px;width:min(560px,100%);max-height:90vh;overflow:auto;box-shadow:0 12px 40px #0004';
     const title=document.createElement('h2');title.textContent='Assign skill levels';panel.appendChild(title);
     const explanation=document.createElement('p');explanation.textContent=`${reason} requires a skill level for every available player. ${missing.length} player(s) need a selection. Unrated does not mean Beginner.`;panel.appendChild(explanation);
-    const values=['','1.5','2.0','2.25','2.5','2.75','3.0','3.25','3.5','3.75','4.0','4.25','4.5','4.75','5.0','5.25'];
+    const values=SKILL_CHOICES;
     const inputs=[];
     for(const p of missing){const line=document.createElement('label');line.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:10px;margin:9px 0';
       const name=document.createElement('span');name.textContent=p.name;line.appendChild(name);
       const select=document.createElement('select');select.style.cssText='max-width:190px';
-      for(const v of values){const option=document.createElement('option');option.value=v;option.textContent=v===''?'Select skill':v==='1.5'?'Beginner (<2.0)':v==='5.25'?'5.0+':v;select.appendChild(option)}
+      for(const choice of values){const option=document.createElement('option');option.value=choice.value;option.textContent=choice.value===''?'Select skill':choice.label;select.appendChild(option)}
       line.appendChild(select);panel.appendChild(line);inputs.push({p,select});}
     const feedback=document.createElement('p');feedback.style.color='#b91c1c';panel.appendChild(feedback);
     const actions=document.createElement('div');actions.style.cssText='display:flex;justify-content:flex-end;gap:10px;margin-top:12px';
     const cancel=document.createElement('button');cancel.textContent='Cancel';cancel.onclick=()=>overlay.remove();actions.appendChild(cancel);
     const apply=document.createElement('button');apply.textContent='Save skill levels';apply.className='primary';
     apply.onclick=()=>{if(inputs.some(x=>!x.select.value)){feedback.textContent='Choose a skill for every listed player.';return;}
-      for(const {p,select} of inputs)setSkillSilently(p,Number(select.value));
+      for(const {p,select} of inputs)setSkillSilently(p,select.value);
       save();overlay.remove();render();};actions.appendChild(apply);panel.appendChild(actions);overlay.appendChild(panel);document.body.appendChild(overlay);
   }
-  function setSkillSilently(p,skill){
+  function setSkillSilently(p,value){
+    const {skill,skillLabel}=skillChoice(value);
     p.skill=skill;
+    p.skillLabel=skillLabel;
+    if(skillLabel)p.useAdaptive=false;
     if((p.resultGames||0)<=3||!Number.isFinite(p.adaptiveRating))p.adaptiveRating=skill;
     if(isZoned()){
       if(!currentPlayingIds().has(p.id))moveToZone(p,zoneFor(p));
@@ -1605,8 +1635,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
       row.className='player-row '+(p.sitNext?'temp ':'')+(p.status==='leaving'?'leaving':'');
       if(grouped){row.style.background=zoneTint(zid);row.style.borderLeft=`4px solid ${zoneColor(zid)}`;}
       const partner=state.players.find(x=>x.id===p.fixedPartnerId);
-      const skillValues=['','1.5','2.0','2.25','2.5','2.75','3.0','3.25','3.5','3.75','4.0','4.25','4.5','4.75','5.0','5.25'];
-      const skillOptions=skillValues.map(v=>`<option value="${v}" ${(v===''&&p.skill==null)||(v!==''&&(Number(v)===p.skill||(v==='1.5'&&p.skill!=null&&p.skill<2)))?'selected':''}>${v===''?'Unrated':(v==='1.5'?'Beginner':v==='5.25'?'5.0+':v)}</option>`).join('');
+      const skillOptions=skillOptionHtml(p);
       const pairOptions=visible.filter(x=>x.id!==p.id && !x.sitNext).map(x=>
         `<option value="${x.id}" ${p.fixedPartnerId===x.id?'selected':''}>Pair: ${escapeHtml(x.name)}</option>`).join('');
       row.innerHTML=`
@@ -1630,7 +1659,11 @@ body.g3-tournament-active .app > .grid{display:none!important}
       row.querySelector('[data-action="skill"]').onchange=e=>setSkill(p.id,e.target.value);
       row.querySelector('[data-action="pair"]').onchange=e=>setPair(p.id,e.target.value||null);
      
-      row.querySelector('[data-action="adaptive"]').onclick=()=>{if(isZoned()||!Number.isFinite(p.adaptiveRating))return;p.useAdaptive=p.useAdaptive!==true;save();render();};
+      row.querySelector('[data-action="adaptive"]').onclick=()=>{
+        if(isZoned()||!Number.isFinite(p.adaptiveRating))return;
+        if(p.skillLabel){ncAlert('Adaptive Rating Requires a Numerical Skill Rating\n\nTo use Adaptive Rating, please select a numerical skill rating (2.0–5.0+) instead of a descriptive skill level.');return;}
+        p.useAdaptive=p.useAdaptive!==true;save();render();
+      };
       row.querySelector('[data-action="left"]').onclick=async ()=>{
         if(await ncConfirm(`Leave NextCuatro?\n\nRemove ${p.name} from future games in both modes? Their session statistics will be saved if they return using Restore.\n\nChoose Cancel to stay in the session.`)) setStatus(p.id,'left');
       };
@@ -1727,7 +1760,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
         <td>${Number(p.played)||0}</td>
         <td>${Number(p.sat)||0}</td>
         <td>${Number(p.wins)||0}–${Number(p.losses)||0}</td>
-        <td>${p.skill!=null && Number.isFinite(p.adaptiveRating) ? Number(p.adaptiveRating).toFixed(2) : '—'}</td>
+        <td>${p.skillLabel ? escapeHtml(skillDisplay(p)) : (p.skill!=null && Number.isFinite(p.adaptiveRating) ? Number(p.adaptiveRating).toFixed(2) : '—')}</td>
         <td>${Object.keys(p.partners||{}).length}</td>
         <td>${statusLabel(p.status||'active')}</td>`;
       body.appendChild(tr);

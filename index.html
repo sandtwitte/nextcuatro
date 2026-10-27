@@ -760,11 +760,11 @@ body.g3-tournament-active .app > .grid{display:none!important}
       <p>Session information is stored locally in the browser on the device being used.</p>
       <p>Closing the browser does not necessarily erase the session, but clearing browser data may remove saved information.</p>
       <p><strong>New Session / Clear Everything</strong> requires confirmation before erasing the current session.</p>
-      <p class="feature-version">NextCuatro · Generation 3 · vG3.1.8.4.1</p>
+      <p class="feature-version">NextCuatro · Generation 3 · vG3.1.8.4.2</p>
     </div>
   </details>
 </section>
-<div class="footer">© 2026 T. Witte · NextCuatro · All rights reserved. · <a href="mailto:support@nextcuatro.com">support@nextcuatro.com</a> · vG3.1.8.4.1</div>
+<div class="footer">© 2026 T. Witte · NextCuatro · All rights reserved. · <a href="mailto:support@nextcuatro.com">support@nextcuatro.com</a> · vG3.1.8.4.2</div>
 
 <div id="pairFairnessModal" class="nc-modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="pairFairnessTitle">
   <div class="nc-modal">
@@ -1811,7 +1811,16 @@ body.g3-tournament-active .app > .grid{display:none!important}
     renderMixerCourtPicker();
     $('sessionEndType').value=state.endType;
     $('endTime').value=state.endTime;
-    $('modeSelect').value=state.mode;
+    // Zoned Play already separates players by skill: show Smart Random only.
+    // Preserve the Open Play shuffle selection in state.mode for when users return.
+    const shuffleSelect=$('modeSelect');
+    for(const option of shuffleSelect.options){
+      const zonedOnly=isZoned() && option.value!=='smart';
+      option.hidden=zonedOnly;
+      option.disabled=zonedOnly;
+    }
+    shuffleSelect.value=isZoned()?'smart':state.mode;
+    shuffleSelect.disabled=isZoned();
     $('timerMinutes').value=String(state.timerMinutes??12);
     renderPlayers(); renderStats(); if(!isZoned())renderRound(); renderReservation();
   }

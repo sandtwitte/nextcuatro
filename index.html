@@ -760,11 +760,11 @@ body.g3-tournament-active .app > .grid{display:none!important}
       <p>Session information is stored locally in the browser on the device being used.</p>
       <p>Closing the browser does not necessarily erase the session, but clearing browser data may remove saved information.</p>
       <p><strong>New Session / Clear Everything</strong> requires confirmation before erasing the current session.</p>
-      <p class="feature-version">NextCuatro · Generation 3 · vG3.1.8.4</p>
+      <p class="feature-version">NextCuatro · Generation 3 · vG3.1.8.4.1</p>
     </div>
   </details>
 </section>
-<div class="footer">© 2026 T. Witte · NextCuatro · All rights reserved. · <a href="mailto:support@nextcuatro.com">support@nextcuatro.com</a> · vG3.1.8.4</div>
+<div class="footer">© 2026 T. Witte · NextCuatro · All rights reserved. · <a href="mailto:support@nextcuatro.com">support@nextcuatro.com</a> · vG3.1.8.4.1</div>
 
 <div id="pairFairnessModal" class="nc-modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="pairFairnessTitle">
   <div class="nc-modal">
@@ -910,7 +910,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
     }
     $('duplicateNotice').style.display = 'none';
     const {skill,skillLabel} = skillChoice($('playerSkill').value);
-    if(isZoned() && skill===null){ncAlert('Zoned Play requires a skill level. Select Beginner or a rating of 2.0 or higher.');$('playerSkill').focus();return;}
+    if(isZoned() && skill===null){ncAlert('Zoned Play requires a skill level.');$('playerSkill').focus();return;}
     state.players.push({
       id:uid(), name:raw, skill, skillLabel, status:'active',
       played:0, sat:0, lastSatRound:-999, joinedRound:state.round,
@@ -928,7 +928,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
     const p=state.players.find(x=>x.id===id);
     if(!p) return;
     const {skill:newSkill,skillLabel} = skillChoice(value);
-    if(isZoned() && newSkill===null){ncAlert('Zoned Play requires a skill level. Select Beginner or a rating of 2.0 or higher.');render();return;}
+    if(isZoned() && newSkill===null){ncAlert('Zoned Play requires a skill level.');render();return;}
     const wasDescriptive=Boolean(p.skillLabel);
     p.skill=Number.isFinite(newSkill)?newSkill:null;
     p.skillLabel=skillLabel;
@@ -1898,7 +1898,7 @@ body.g3-tournament-active .app > .grid{display:none!important}
       }else courtBox.innerHTML='<div class="subtle">Ready for this zone’s first rotation.</div>';
       box.querySelector('.g2-next').onclick=()=>zoneAdvance(z.id);area.appendChild(box);
     }
-    const unassigned=state.players.filter(p=>p.status==='active'&&!currentZone(p));if(unassigned.length){const b=document.createElement('div');b.className='g2-unassigned';b.textContent='Unrated (select Beginner or a rating): '+unassigned.map(p=>p.name).join(', ');area.appendChild(b)}
+    const unassigned=state.players.filter(p=>p.status==='active'&&!currentZone(p));if(unassigned.length){const b=document.createElement('div');b.className='g2-unassigned';b.textContent='Unrated (select a skill level): '+unassigned.map(p=>p.name).join(', ');area.appendChild(b)}
   }
   function escapeHtml(s){
     return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
